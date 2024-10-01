@@ -1,5 +1,5 @@
-import Image from "next/image";
 import localFont from "next/font/local";
+import {useEffect, useState} from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -12,104 +12,143 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export default function Home() {
-  return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/pages/index.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+type MenuLabelType = '지메추' |'지디추'| '스메추' | '매메추'
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+type MenuType = {
+  label: MenuLabelType;
+  description: string;
+  menus: string[];
+}
+
+const DEFAULT_MENUS = [
+    '한식', '양식', '중식', '아시안', '일식', '인도커리', '파스타', '피자', '야키토리', '삼겹살', '국밥', '해장국', '초밥', '라멘', '칼국수', '떡볶이', '순대국', '돼지곱창', '소곱창', '닭발',
+]
+
+const DESSERTS = [
+    '퀸아망', '딸기케이크', '초코케이크', '크로와상','크로플','크루키','메론빵','아이스크림','몽블랑','빙수','홍콩와플'
+]
+
+const STONE_I_MENUS = [
+    '찜닭', '굽네', '피자', '순대국', '칼국수', '서브웨이', '버거킹', '보노보스', '야래향',
+]
+
+const MAEJIRI_MENUS = [
+    '오리훈제', '고모네', '치밥', '학식', '편의점 도시락', '엽떡', '컵밥'
+]
+
+const EMOJIS = [
+    '🐷','🐰','🌝','🎉','✨','🐙','💥','🍎','🍒','🍑','🥐','🍗','🍔','🎂','🍪','🍩','❤️‍','🔥','🐹','🧚','🔥'
+]
+
+const MENU_TYPE : MenuType[] = [
+    {
+        label: '지메추',
+        description:'지나의 메뉴 추천',
+        menus:DEFAULT_MENUS,
+    },
+    {
+        label: '지디추',
+        description: '지나의 디저트 추천',
+        menus: DESSERTS
+    },
+    {
+        label: '스메추',
+        description: '스톤아이 저녁 메뉴 추천',
+        menus: STONE_I_MENUS
+
+    },
+    {
+        label: '매메추',
+        description: '매지리 메뉴 추천',
+        menus: MAEJIRI_MENUS
+    }
+]
+
+const TypeSelect = ({selectedMenuType, onClickMenuLabel} : {selectedMenuType?:MenuType;onClickMenuLabel: (label: MenuLabelType) => void}) => {
+    const labels = MENU_TYPE.map(menu => ( menu.label))
+
+    if (!selectedMenuType) return null;
+
+    return (
+    <div className={'flex flex-col gap-2'}>
+        <div className={'flex gap-2 justify-center'}>
+            {labels.map((label, index) => (
+                <p key={index} onClick={() => onClickMenuLabel(label)} className={`text-2xl font-bold cursor-pointer p-2 rounded-2xl ${selectedMenuType.label === label ? `bg-blue-200` : ''}`}>
+                    {label}
+                </p>
+            ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <p className={'text-center'}>
+            {selectedMenuType.description}
+        </p>
+    </div>
+    )
+}
+
+const SelectedMenus = ({selectedMenuType,selectedMenu,setSelectedMenu} : {selectedMenuType?: MenuType; selectedMenu: string; setSelectedMenu: (menu: string) => void; }) => {
+
+    if (!selectedMenuType) return null;
+
+    return (
+        <div className={'flex gap-12 flex-col justify-center overflow-hidden'} >
+            <div
+                key={selectedMenuType.label}
+                className={'text-3xl font-bold pt-10 text-center flex gap-4 animate-infinite-scroll'}>
+                  {selectedMenuType.menus?.map((menu, index) =>
+                      (<div key={menu + index} className={'flex flex-shrink-0'}>
+                          {menu}
+                      </div>))}
+            </div>
+
+            <p className={'text-2xl font-medium text-center cursor-pointer'} onClick={()=>{
+                const randomValues = selectedMenuType?.menus[Math.floor(Math.random() * selectedMenuType?.menus.length)];
+
+                setSelectedMenu(randomValues)
+
+            }}>
+                추천받기
+            </p>
+
+            <p className={'text-6xl font-extrabold text-center pt-20'}>
+                {selectedMenu ? `${selectedMenu + (selectedMenu && EMOJIS[Math.floor(Math.random() * EMOJIS.length)])}` : <div className={'h-[119px]'}></div> }
+            </p>
+        </div>
+    )
+
+}
+
+export default function Home() {
+    const [selectedMenuLabel, setSelectedMenuLabel] = useState<MenuLabelType>('지메추')
+    const [selectedMenu, setSelectedMenu] = useState('');
+    const [selectedMenuType, setSelectedMenuType] = useState<MenuType | undefined>(undefined);
+
+    useEffect(() => {
+        setSelectedMenuType(MENU_TYPE.find(menu => menu.label === selectedMenuLabel))
+    },[selectedMenuLabel])
+
+    return (
+        <div
+            className={`${geistSans.variable} ${geistMono.variable} flex items-center justify-items-center min-h-screen p-8 pb-20 gap-16 font-[family-name:var(--font-geist-sans)]`}
+    >
+      <div className={'justify-center flex w-full'}>
+        <div className={'w-[700px] justify-center align-middle bg-white rounded-[20px]'}>
+          <div className={'p-10  shadow-2xl h-[800px] flex flex-col gap-5'}>
+              <p className={'font-bold text-3xl text-center pb-10 pt-2'}>
+                  🐷 지나가 추천하는 오늘의 메뉴 🐷
+              </p>
+
+          <TypeSelect
+          selectedMenuType={selectedMenuType}
+              onClickMenuLabel={(label: MenuLabelType)=> {
+                  setSelectedMenu('')
+                  setSelectedMenuLabel(label)
+              }}/>
+
+              <SelectedMenus selectedMenuType={selectedMenuType} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }
