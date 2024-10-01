@@ -70,10 +70,10 @@ const TypeSelect = ({selectedMenuType, onClickMenuLabel} : {selectedMenuType?:Me
     if (!selectedMenuType) return null;
 
     return (
-    <div className={'flex flex-col gap-2'}>
-        <div className={'flex gap-2 justify-center'}>
+    <div className={'flex flex-col gap-2 '}>
+        <div className={' gap-2 justify-center grid grid-cols-2 grid-rows-2 md:flex md:flex-row'}>
             {labels.map((label, index) => (
-                <p key={index} onClick={() => onClickMenuLabel(label)} className={`text-2xl font-bold cursor-pointer p-2 rounded-2xl ${selectedMenuType.label === label ? `bg-blue-200` : ''}`}>
+                <p key={index} onClick={() => onClickMenuLabel(label)} className={`w-fit text-center m-auto text:md font-bold cursor-pointer p-2 rounded-2xl ${selectedMenuType.label === label ? `bg-blue-200` : ''} md:text-2xl`}>
                     {label}
                 </p>
             ))}
@@ -93,14 +93,14 @@ const SelectedMenus = ({selectedMenuType,selectedMenu,setSelectedMenu} : {select
         <div className={'flex gap-12 flex-col justify-center overflow-hidden'} >
             <div
                 key={selectedMenuType.label}
-                className={'text-3xl font-bold pt-10 text-center flex gap-4 animate-infinite-scroll'}>
+                className={'text-xl  font-bold pt-4 text-center flex gap-4 animate-infinite-scroll md:text-3xl md:pt-10' }>
                   {selectedMenuType.menus?.map((menu, index) =>
                       (<div key={menu + index} className={'flex flex-shrink-0'}>
                           {menu}
                       </div>))}
             </div>
 
-            <p className={'text-2xl font-medium text-center cursor-pointer'} onClick={()=>{
+            <p className={'text-lg font-medium text-center cursor-pointer md:text-2xl'} onClick={()=>{
                 const randomValues = selectedMenuType?.menus[Math.floor(Math.random() * selectedMenuType?.menus.length)];
 
                 setSelectedMenu(randomValues)
@@ -109,8 +109,8 @@ const SelectedMenus = ({selectedMenuType,selectedMenu,setSelectedMenu} : {select
                 추천받기
             </p>
 
-            <p className={'text-6xl font-extrabold text-center pt-20'}>
-                {selectedMenu ? `${selectedMenu + (selectedMenu && EMOJIS[Math.floor(Math.random() * EMOJIS.length)])}` : <div className={'h-[119px]'}></div> }
+            <p className={'text-4xl break-keep font-extrabold text-center pb-10 md:pt-20 md:text-6xl'}>
+                {selectedMenu + (selectedMenu && EMOJIS[Math.floor(Math.random() * EMOJIS.length)])}
             </p>
         </div>
     )
@@ -131,9 +131,9 @@ export default function Home() {
             className={`${geistSans.variable} ${geistMono.variable} flex items-center justify-items-center min-h-screen p-8 pb-20 gap-16 font-[family-name:var(--font-geist-sans)]`}
     >
       <div className={'justify-center flex w-full'}>
-        <div className={'w-[700px] justify-center align-middle bg-white rounded-[20px]'}>
-          <div className={'p-10  shadow-2xl h-[800px] flex flex-col gap-5'}>
-              <p className={'font-bold text-3xl text-center pb-10 pt-2'}>
+        <div className={'w-[100%] justify-center align-middle bg-white md:w-[700px]'}>
+          <div className={'p-10 h-fit shadow-2xl  flex flex-col gap-5 md:h-[800px] rounded-[20px]'}>
+              <p className={'font-bold text-xl text-center pb-10 pt-2 break-keep text-wrap md:text-3xl'}>
                   🐷 지나가 추천하는 오늘의 메뉴 🐷
               </p>
 
