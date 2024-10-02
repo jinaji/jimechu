@@ -100,16 +100,19 @@ const SelectedMenus = ({selectedMenuType,selectedMenu,setSelectedMenu} : {select
                       </div>))}
             </div>
 
-            <p className={'text-lg font-medium text-center cursor-pointer md:text-2xl'} onClick={()=>{
+            <div className={'flex flex-row align-middle justify-center gap-3'}>
+
+            <p className={`text-lg font-medium text-center cursor-pointer md:text-2xl ${!selectedMenu ? 'animate-zzz' : ''}`} onClick={()=>{
                 const randomValues = selectedMenuType?.menus[Math.floor(Math.random() * selectedMenuType?.menus.length)];
-
                 setSelectedMenu(randomValues)
-
             }}>
                 추천받기
             </p>
 
-            <p className={'text-4xl break-keep font-extrabold text-center pb-10 md:pt-20 md:text-6xl'}>
+            </div>
+
+
+            <p  className={'text-4xl break-keep font-extrabold text-center pb-10 md:pt-20 md:text-6xl'}>
                 {selectedMenu + (selectedMenu && EMOJIS[Math.floor(Math.random() * EMOJIS.length)])}
             </p>
         </div>
