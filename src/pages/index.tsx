@@ -73,7 +73,7 @@ const TypeSelect = ({selectedMenuType, onClickMenuLabel} : {selectedMenuType?:Me
     <div className={'flex flex-col gap-2 '}>
         <div className={' gap-2 justify-center grid grid-cols-2 grid-rows-2 md:flex md:flex-row'}>
             {labels.map((label, index) => (
-                <p key={index} onClick={() => onClickMenuLabel(label)} className={`w-fit text-center m-auto text:md font-bold cursor-pointer p-2 rounded-2xl ${selectedMenuType.label === label ? `bg-blue-200` : ''} md:text-2xl`}>
+                <p key={index} onClick={() => onClickMenuLabel(label)} className={`w-fit text-center m-auto text:md font-bold cursor-pointer p-2 rounded-2xl ${selectedMenuType.label === label ? `bg-blue-200 dark:bg-emerald-900` : ''} md:text-2xl`}>
                     {label}
                 </p>
             ))}
@@ -131,8 +131,8 @@ export default function Home() {
             className={`${geistSans.variable} ${geistMono.variable} flex items-center justify-items-center min-h-screen p-8 pb-20 gap-16 font-[family-name:var(--font-geist-sans)]`}
     >
       <div className={'justify-center flex w-full'}>
-        <div className={'w-[100%] justify-center align-middle bg-white md:w-[700px]'}>
-          <div className={'p-10 h-fit shadow-2xl  flex flex-col gap-5 md:h-[800px] rounded-[20px]'}>
+        <div className={'w-[100%] justify-center align-middle bg-white dark:bg-[#1f1f2a] md:w-[700px] rounded-[20px] shadow-2xl'}>
+          <div className={'p-10 h-fit   flex flex-col gap-5 md:h-[800px] '}>
               <p className={'font-bold text-xl text-center pb-10 pt-2 break-keep text-wrap md:text-3xl'}>
                   🐷 지나가 추천하는 오늘의 메뉴 🐷
               </p>
@@ -152,3 +152,4 @@ export default function Home() {
     </div>
   );
 }
+
