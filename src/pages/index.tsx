@@ -59,8 +59,6 @@ const TypeSelect = ({
 }) => {
   const labels = MENU_TYPE.map((menu) => menu.label);
 
-  if (!selectedMenuType) return null;
-
   return (
     <div className={'flex flex-col gap-2 '}>
       <div
@@ -72,13 +70,15 @@ const TypeSelect = ({
           <p
             key={index}
             onClick={() => onClickMenuLabel(label)}
-            className={`w-fit text-center m-auto text:md font-bold cursor-pointer p-2 rounded-2xl ${selectedMenuType.label === label ? `bg-blue-200 dark:bg-emerald-900` : ''} md:text-2xl`}
+            className={`w-fit text-center m-auto text:md font-bold cursor-pointer p-2 rounded-2xl ${selectedMenuType?.label === label ? `bg-blue-200 dark:bg-emerald-900` : ''} md:text-2xl`}
           >
             {label}
           </p>
         ))}
       </div>
-      <p className={'text-center'}>{selectedMenuType.description}</p>
+      <p className={'text-center text-sm md:text-xl'}>
+        {selectedMenuType?.description ?? ''}
+      </p>
     </div>
   );
 };
@@ -99,11 +99,14 @@ const SelectedMenus = ({
       <div
         key={selectedMenuType.label}
         className={
-          'text-xl  font-bold pt-4 text-center flex gap-4 animate-infinite-scroll md:text-3xl md:pt-10'
+          'pt-4 text-center flex gap-4 animate-infinite-scroll md:text-3xl md:pt-10'
         }
       >
         {selectedMenuType.menus?.map((menu, index) => (
-          <div key={menu + index} className={'flex flex-shrink-0'}>
+          <div
+            key={menu + index}
+            className={'flex flex-shrink-0 text-xl font-medium'}
+          >
             {menu}
           </div>
         ))}
@@ -111,7 +114,7 @@ const SelectedMenus = ({
 
       <div className={'flex flex-row align-middle justify-center gap-3'}>
         <p
-          className={`text-lg font-medium text-center cursor-pointer md:text-2xl ${!selectedMenu ? 'animate-zzz' : ''}`}
+          className={`text-lg font-bold text-center cursor-pointer md:text-2xl ${!selectedMenu ? 'animate-zzz' : ''}`}
           onClick={() => {
             const randomValues =
               selectedMenuType?.menus[
@@ -138,7 +141,7 @@ const SelectedMenus = ({
 
 export default function Home() {
   const [selectedMenuLabel, setSelectedMenuLabel] =
-    useState<MenuLabelType>('지메추');
+    useState<MenuLabelType | null>(null);
   const [selectedMenu, setSelectedMenu] = useState('');
   const [selectedMenuType, setSelectedMenuType] = useState<
     MenuType | undefined
@@ -158,17 +161,26 @@ export default function Home() {
       <div className={'justify-center flex w-full'}>
         <div
           className={
-            'w-[100%] justify-center align-middle bg-white dark:bg-[#1f1f2a] md:w-[700px] rounded-[20px] shadow-2xl'
+            'w-[100%] justify-center align-middle bg-white dark:bg-[#1f1f2a] md:w-[500px] rounded-[20px] shadow-2xl'
           }
         >
-          <div className={'p-10 h-fit   flex flex-col gap-5 md:h-[800px] '}>
-            <p
-              className={
-                'font-bold text-xl text-center pb-10 pt-2 break-keep text-wrap md:text-3xl'
-              }
-            >
-              🐷 지나의 추천 메뉴 🐷
-            </p>
+          <div
+            className={'p-10 min-h-[400px] flex flex-col gap-5 md:h-[800px] '}
+          >
+            <div className={'pb-10 gap-1 flex flex-col'}>
+              <p
+                className={
+                  'font-bold text-xl text-center  pt-2 break-keep text-wrap md:text-3xl'
+                }
+              >
+                🐷 지나의 추천 메뉴 🐷
+              </p>
+              {!selectedMenuType && (
+                <p className={'text-sm text-center italic'}>
+                  추천받을 메뉴 타입을 골라보세요!
+                </p>
+              )}
+            </div>
 
             <TypeSelect
               selectedMenuType={selectedMenuType}
