@@ -167,7 +167,7 @@ export default function Home() {
                 'font-bold text-xl text-center pb-10 pt-2 break-keep text-wrap md:text-3xl'
               }
             >
-              🐷 지나가 추천하는 오늘의 메뉴 🐷
+              🐷 지나의 추천 메뉴 🐷
             </p>
 
             <TypeSelect
