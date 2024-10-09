@@ -94,6 +94,11 @@ const SelectedMenus = ({
 }) => {
   if (!selectedMenuType) return null;
 
+  const menus = selectedMenuType.menus
+    .concat(selectedMenuType.menus)
+    .concat(selectedMenuType.menus)
+    .concat(selectedMenuType.menus);
+
   return (
     <div className={'flex gap-12 flex-col justify-center overflow-hidden'}>
       <div
@@ -102,7 +107,7 @@ const SelectedMenus = ({
           'pt-4 text-center flex gap-4 animate-infinite-scroll md:text-3xl md:pt-10'
         }
       >
-        {selectedMenuType.menus?.map((menu, index) => (
+        {menus.map((menu, index) => (
           <div
             key={menu + index}
             className={'flex flex-shrink-0 text-xl font-medium'}
